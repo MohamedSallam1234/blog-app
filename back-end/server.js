@@ -1,0 +1,19 @@
+const express = require("express");
+const app = express();
+const dotenv = require("dotenv");
+dotenv.config();
+const connectDB = require("./db-connection");
+
+app.use(express.json());
+
+connectDB().then(() => {
+  console.log("MongoDB Connected...");
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
