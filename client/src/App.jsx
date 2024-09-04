@@ -1,8 +1,16 @@
+import Homepage from './components/Homepage'
+import { Route, Routes } from 'react-router-dom'
+import Layout from './components/Layout'
+
 const App = () => {
   return (
-    <div>
-      <h1 className="text-5xl text-green-500">My App</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Homepage />} />
+        <Route path="/login" element={<h1>Login</h1>} />
+        <Route path="/register" element={<h1>Register </h1>} />
+      </Route>
+    </Routes>
   )
 }
 
