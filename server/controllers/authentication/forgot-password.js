@@ -49,18 +49,20 @@ const forgotPassword = async (req, res, next) => {
 
     try {
       const passwordResetEmail = await sendEmail({
-        email,
+        to: email,
+        from: 'blogapp52@gmail.com',
         subject: 'Password reset token (valid for 10 min)',
-        message,
+        text: message,
+        html: `<p>${message}</p>`,
       })
-    } catch (error) {
-      return res.status(500).json({
-        status: 'failure',
-        error: error.message,
-      })
-    }
 
-    if (!passwordResetEmail) {
+      if (passwordResetEmail[0].statusCode !== 202) {
+        return res.status(500).json({
+          status: 'failure',
+          error: 'Failed to send password reset token via email',
+        })
+      }
+    } catch (error) {
       return res.status(500).json({
         status: 'failure',
         error: 'Failed to send password reset token via email',
@@ -69,7 +71,7 @@ const forgotPassword = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
-      message: 'Password reset token saved and sent to email',
+      message: 'Password reset token saved and sent via email',
     })
   } catch (error) {
     next(error)
