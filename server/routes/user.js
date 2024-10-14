@@ -6,6 +6,7 @@ const isAuthenticated = require('./../middlewares/is-authenticated.js')
 const restrictTo = require('./../middlewares/restrict-to.js')
 const forgotPassword = require('../controllers/authentication/forgot-password.js')
 const resetPassword = require('../controllers/authentication/reset-password.js')
+const updatePassword = require('../controllers/authentication/update-password.js')
 // const { Role } = require('@prisma/client')
 const roles = ['USER', 'ADMIN', 'WRITER']
 
@@ -16,5 +17,6 @@ router.post('/login', login)
 router.get('/', isAuthenticated, restrictTo(roles), getAllUsers)
 router.post('/forgot-password', forgotPassword)
 router.patch('/reset-password/:token/', resetPassword)
+router.patch('/update-password', isAuthenticated, updatePassword)
 
 module.exports = router
